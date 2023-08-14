@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for i in {1..15}; do
+  python3 /home/kiro_atef/scripts/auto_click.py &
+done
+sleep 60
+
+pkill -f "python3 /home/kiro_atef/scripts/auto_click.py"
