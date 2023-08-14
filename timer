@@ -1,0 +1,107 @@
+#!/bin/bash
+
+# Pomodoro Timer Settings
+work_duration=25            # Duration of work session in minutes
+short_break_duration=5      # Duration of short break in minutes
+long_break_duration=15      # Duration of long break in minutes
+sessions_until_long_break=4 # Number of work sessions before a long break
+
+# Notification Sounds (change path if needed) i need netofication ubuntu ststem path
+work_sound="/usr/share/sounds/freedesktop/stereo/complete.oga"
+break_sound="/usr/share/sounds/freedesktop/stereo/complete.oga"
+
+# Function to play sound notification
+function play_sound {
+  paplay "$1" &>/dev/null
+}
+
+# Function to display timer countdown
+function display_timer {
+  local timer=$1
+  local minutes=$((timer / 60))
+  local seconds=$((timer % 60))
+  printf "%02d:%02d" "$minutes" "$seconds"
+}
+
+# Function to start a work session
+function start_work_session {
+  local session_count=$1
+  local duration=$((work_duration * 60))
+  local end_time=$((SECONDS + duration))
+
+  echo "Work Session $session_count started."
+
+  while [ "$SECONDS" -lt "$end_time" ]; do
+    local remaining=$((end_time - SECONDS))
+    printf "\rWork Session %d: %s remaining" "$session_count" "$(display_timer "$remaining")"
+    sleep 1
+  done
+
+  play_sound "$work_sound"
+  echo -e "\nWork Session $session_count completed."
+  read -p "Press Enter to start the break session..."
+}
+
+# Function to start a break session
+function start_break_session {
+  local session_type=$1
+  local break_duration=$2
+  local duration=$((break_duration * 60))
+  local end_time=$((SECONDS + duration))
+
+  echo "$session_type Break started."
+
+  while [ "$SECONDS" -lt "$end_time" ]; do
+    local remaining=$((end_time - SECONDS))
+    printf "\r%s Break: %s remaining" "$session_type" "$(display_timer "$remaining")"
+    sleep 1
+  done
+
+  play_sound "$break_sound"
+  echo -e "\n$session_type Break completed."
+  read -p "Press Enter to start the next work session..."
+}
+
+# Function to start the Pomodoro timer
+function start_pomodoro_timer {
+  local session_count=1
+
+  while true; do
+    echo "------------------------"
+    echo "Pomodoro Timer - Session $session_count"
+    echo "------------------------"
+
+    start_work_session "$session_count"
+
+    if [ "$((session_count % sessions_until_long_break))" -eq 0 ]; then
+      start_break_session "Long" "$long_break_duration"
+    else
+      start_break_session "Short" "$short_break_duration"
+    fi
+
+    ((session_count++))
+  done
+}
+
+# Main menu
+echo "Welcome to the Pomodoro Timer!"
+while true; do
+  echo "------------------------"
+  echo "1. Start Pomodoro Timer"
+  echo "2. Exit"
+  echo "------------------------"
+  read -p "Please select an option: " option
+
+  case $option in
+  1)
+    start_pomodoro_timer
+    ;;
+  2)
+    echo "Thank you for using the Pomodoro Timer. Goodbye!"
+    exit 0
+    ;;
+  *)
+    echo "Invalid option. Please try again."
+    ;;
+  esac
+done
