@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python3 /home/kiro_atef/scripts/down_song.py
