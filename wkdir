@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd /media/kiro_atef/part2/software/ && zsh
+
+
+# Path: wkdir
