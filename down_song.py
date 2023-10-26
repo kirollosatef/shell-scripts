@@ -16,9 +16,6 @@ def download_song(url: str, library: str) -> None:
 
     download_folder = f"/media/kiro_atef/part2/songs/{library}"
 
-    if not os.path.exists(download_folder):
-        os.makedirs(download_folder)
-
     command = (
         f"youtube-dl -x --audio-format mp3 -o '{download_folder}/%(title)s.%(ext)s' '{audio_url}'"
     )
@@ -33,7 +30,7 @@ def main() -> None:
     Prompts the user to select a library folder and enter a YouTube Music song URL, then downloads the song and saves it to the specified library folder.
     """
     # List the folders in the main path
-    main_path = "/media/kiro_atef/part2/songs/"
+    main_path = "/media/kirollos/part2/songs/"
     folders = os.listdir(main_path)
     print("Select a library folder:")
     for i, folder in enumerate(folders):
