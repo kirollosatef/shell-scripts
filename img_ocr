@@ -1,0 +1,72 @@
+#!/bin/bash
+# Set the path to the Tesseract language data files
+TESSDATA_PREFIX="/usr/share/tesseract-ocr/"
+
+# Function to perform OCR on an image and copy the text to the clipboard
+perform_ocr_and_copy_to_clipboard() {
+  if [ $# -ne 1 ]; then
+    echo "Usage: $0 <image_path>"
+    exit 1
+  fi
+
+  image_path="$1"
+
+  # Check if the required command-line tools are installed
+  command -v tesseract >/dev/null 2>&1 || {
+    echo >&2 "Tesseract is not installed. Please install it."
+    exit 1
+  }
+  command -v xclip >/dev/null 2>&1 || {
+    echo >&2 "xclip is not installed. Please install it."
+    exit 1
+  }
+
+  # Create a temporary file to store the OCR output
+  ocr_output=$(mktemp)
+
+  # Before OCR
+  echo "Performing OCR on $image_path..."
+
+  # Perform OCR on the image and store the text in the temporary file
+  TESSERACT_OCR_ENGINE_MODE=3 TESSDATA_PREFIX=/usr/share/tesseract-ocr/ tesseract "$image_path" "$ocr_output" 2> ocr_error.log
+
+  # Check if the OCR output file was created
+  if [ ! -f "$ocr_output" ]; then
+    echo "Error: OCR output file was not created."
+    exit 1
+  fi
+
+  # After OCR
+  echo "OCR completed."
+
+  # Copy the recognized text to the clipboard using xclip
+  cat "$ocr_output" | xclip -selection clipboard 2> xclip_error.log
+
+  # Check if the clipboard contents were successfully copied
+  if [ $? -ne 0 ]; then
+    echo "Error: Failed to copy OCR text to clipboard."
+    exit 1
+  fi
+
+  # After copying to clipboard
+  echo "Copying OCR text to clipboard..."
+
+  # Output the recognized text to the console
+  echo "OCR Text Copied to Clipboard:"
+  cat "$ocr_output"
+
+  # Clean up the temporary file
+  rm "$ocr_output"
+
+  # After cleanup
+  echo "Cleaning up temporary files..."
+}
+
+# Check if an image path was provided as an argument
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 <image_path>"
+  exit 1
+fi
+
+# Usage example:
+perform_ocr_and_copy_to_clipboard "$1"
