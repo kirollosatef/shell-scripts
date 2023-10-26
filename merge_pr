@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Check if gh CLI is installed
+if ! command -v gh &> /dev/null
+then
+    echo "GitHub CLI (gh) is not installed. Please install it first."
+    exit 1
+fi
+
+# Check if the user has supplied a PR number
+if [ -z "$1" ]
+then
+  echo "Usage: $0 <pull-request-number>"
+  exit 1
+fi
+
+PR_NUMBER=$1
+
+# Fetch details about the pull request including the mergeable status
+PR_DETAILS=$(gh pr view $PR_NUMBER --json state,mergeable)
+
+# Check if the pull request is open
+PR_STATE=$(echo $PR_DETAILS | jq -r '.state')
+if [ "$PR_STATE" != "OPEN" ]; then
+  echo "Error: The pull request #$PR_NUMBER is not open."
+  exit 1
+fi
+
+# Check if the pull request can be merged without conflicts
+PR_MERGEABLE=$(echo $PR_DETAILS | jq -r '.mergeable')
+if [ "$PR_MERGEABLE" != "MERGEABLE" ]; then
+  echo "Error: The pull request #$PR_NUMBER cannot be merged due to conflicts."
+  exit 1
+fi
+
+# If the PR is open and there are no conflicts, merge the PR
+gh pr merge $PR_NUMBER --auto --squash
+echo "The pull request #$PR_NUMBER has been automatically merged."
+
