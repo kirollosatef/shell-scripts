@@ -1,124 +1,138 @@
 # Script Collection
 
-This repository contains a collection of scripts used for various purposes. Below is a description of each script and instructions on how to use them.
+This repository contains a collection of utility scripts for various purposes. Below is a description of each script and instructions on how to use them.
 
 ## Prerequisites
 
-Before running these scripts, ensure you have the necessary environment and permissions set up. Some scripts may require additional packages or software to be installed on your system.
+Before you run these scripts, ensure you have the necessary environment, permissions, and dependencies set up. Some scripts may require additional packages or software to be installed on your system.
 
 ## Script Descriptions
 
-### 1. `auto_click.py`
-A script that simulates mouse clicks. Useful for automating repetitive clicking tasks.
+### 1. `gen_pass`
+A Bash script that generates a strong password consisting of a mix of upper-case letters, lower-case letters, digits, and special characters. The user specifies the desired length of the password.
+
+**Usage:**
+```shell
+./gen_pass <password_length>
+```
+
+### 2. `img_ocr`
+This script utilizes Tesseract OCR to extract text from a specified image file. The extracted text is subsequently copied to the clipboard.
+
+**Usage:**
+```shell
+./img_ocr <path-to-image>
+```
+
+### 3. `kill_port`
+A utility script designed to terminate the process currently using a specified port, freeing it up for other uses.
+
+**Usage:**
+```shell
+./kill_port <port-number>
+```
+
+### 4. `merge_pr`
+A script that automates the process of merging pull requests, useful in collaborative development environments.
+
+**Usage:**
+```shell
+./merge_pr
+```
+
+### 5. `run_auto_click`
+This script automates mouse clicks, though the specific details and usage context are unclear from the script itself.
+
+**Usage:**
+```shell
+./run_auto_click
+```
+
+### 6. `setup`
+A general setup or installation script, possibly used for configuring environments, installing software, or prepping systems.
+
+**Usage:**
+```shell
+./setup
+```
+
+### 7. `timer`
+Implements a Pomodoro timer, promoting efficient time management by delineating work and break periods.
+
+**Usage:**
+```shell
+./timer
+```
+
+### 8. `wkdir`
+Changes the working directory to a specific path and initiates a new shell (Z shell).
+
+**Usage:**
+```shell
+./wkdir
+```
+
+### 9. `xmp`
+Controls the XAMPP server, providing options to start, stop, or reload the server.
+
+**Usage:**
+```shell
+./xmp [option]
+Options:
+    -s: Stop the server
+    -r: Reload the server
+    No option: Start the server
+```
+
+### 10. `all_files`
+This script creates a text file that consolidates the names and contents of all files within the current directory and its subdirectories into a single file.
+
+**Usage:**
+```shell
+./all_files
+```
+
+### 11. `auto_click.py`
+A Python script that performs automatic mouse clicks at the current cursor position.
 
 **Usage:**
 ```shell
 python auto_click.py
 ```
 
-### 2. `convert_images_to_pdf.py`
-This script converts images into a single PDF file.
+### 12. `convert_images_to_pdf.py`
+This Python script converts images located in a specified folder into a single PDF document. The images can be in various formats, including PNG, JPG, JPEG, and GIF.
 
 **Usage:**
 ```shell
-python convert_images_to_pdf.py [path-to-images]
+python convert_images_to_pdf.py
 ```
 
-### 3. `create_pr`
-A utility script for creating pull requests. It likely interacts with version control systems like git.
+### 13. `create_pr`
+This script's functionality isn't entirely clear without context. It could potentially be related to creating pull requests in a version control system like git.
 
 **Usage:**
 ```shell
-./create_pr [options]
+./create_pr
 ```
 
-### 4. `down_song.py`
-A script for downloading songs from specified URLs.
+### 14. `down_song` and `down_song.py`
+These scripts appear to be related to downloading songs, possibly from YouTube. The exact functionality isn't clear from the script contents alone.
 
 **Usage:**
 ```shell
-python down_song.py [song-url]
+./down_song  # or 'python down_song.py' depending on the script's requirements
 ```
 
-### 5. `gen_html`
-Assumed to be a script for generating HTML files or content.
+### 15. `gen_html`
+This Bash script creates a set of starter HTML, CSS, and JavaScript files for a new web project. It initializes a standard project structure with basic files and starter code.
 
 **Usage:**
 ```shell
-./gen_html [options]
+./gen_html
 ```
 
-### 6. `gen_pass`
-This script probably generates random passwords meeting certain criteria.
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-**Usage:**
-```shell
-./gen_pass [options]
-```
-
-### 7. `img_ocr`
-A script that likely performs Optical Character Recognition (OCR) on images to extract text.
-
-**Usage:**
-```shell
-./img_ocr [path-to-image]
-```
-
-### 8. `kill_port`
-A utility script for terminating processes running on specified ports.
-
-**Usage:**
-```shell
-./kill_port [port-number]
-```
-
-### 9. `merge_pr`
-A script for merging pull requests. Likely for use with version control systems.
-
-**Usage:**
-```shell
-./merge_pr [options]
-```
-
-### 10. `run_auto_click`
-This script possibly initiates the `auto_click.py` script with predefined parameters.
-
-**Usage:**
-```shell
-./run_auto_click [options]
-```
-
-### 11. `setup`
-A general setup or installation script for a project or environment.
-
-**Usage:**
-```shell
-./setup [options]
-```
-
-### 12. `timer`
-A script functioning as a countdown timer or to measure elapsed time.
-
-**Usage:**
-```shell
-./timer [options]
-```
-
-### 13. `wkdir`
-Changes the working directory during a script's execution or defines project scopes.
-
-**Usage:**
-```shell
-./wkdir [path-to-directory]
-```
-
-### 14. `xmp`
-The purpose of this script is unclear without further context. It may relate to a protocol, format, or action denoted by 'XMP'.
-
-**Usage:**
-```shell
-./xmp [options]
-```
-
-### 15. `all_files`
-The purpose and usage of this item are unclear as it may be a directory or a script.
+Please make sure to update tests as appropriate.
