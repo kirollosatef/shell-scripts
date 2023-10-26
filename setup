@@ -1,0 +1,256 @@
+#!/bin/bash
+
+# Update and upgrade system
+sudo apt update
+sudo apt upgrade -y
+sudo apt install curl
+
+# set up swap space
+sudo fallocate -l 30G ~/swapfile
+sudo chmod 600 ~/swapfile
+sudo mkswap ~/swapfile
+sudo swapon ~/swapfile
+sudo sh -c 'echo "/swapfile swap swap defaults 0 0" >> /etc/fstab'
+
+# Install snap
+sudo apt install -y snapd
+
+# Install snap packages
+# VS Code
+sudo snap install code --classic
+# Discord
+sudo snap install discord
+# Slack
+sudo snap install slack --classic
+# Spotify
+sudo snap install spotify
+# Postman
+sudo snap install postman
+# Insomnia
+sudo snap install insomnia
+# Skype
+sudo snap install skype --classic
+# Zoom
+sudo snap install zoom-client
+# Telegram
+sudo snap install telegram-desktop
+# WhatsApp
+sudo snap install whatsdesk
+# VLC
+sudo snap install vlc
+# GIMP
+sudo snap install gimp
+# Inkscape
+sudo snap install inkscape
+# OBS Studio
+sudo snap install obs-studio
+# Kdenlive
+sudo snap install kdenlive
+# Blender
+sudo snap install blender --classic
+# Audacity
+sudo snap install audacity
+# codeblocks
+sudo snap install codeblocks --classic
+# Arduino IDE
+sudo snap install arduino
+# Android Studio
+sudo snap install android-studio --classic
+# PyCharm
+sudo snap install pycharm-community --classic
+# IntelliJ IDEA
+sudo snap install intellij-idea-community --classic
+# WebStorm
+sudo snap install webstorm --classic
+# CLion
+sudo snap install clion --classic
+# GoLand
+sudo snap install goland --classic
+# Rider
+sudo snap install rider --classic
+# DataGrip
+sudo snap install datagrip --classic
+# RubyMine
+sudo snap install rubymine --classic
+# PhpStorm
+sudo snap install phpstorm --classic
+
+# Install apt packages
+# Google Chrome
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install -y ./google-chrome*.deb
+rm google-chrome*.deb
+# Brave Browser
+sudo apt install -y apt-transport-https curl
+sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+sudo sh -c "echo \"deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main\" > /etc/apt/sources.list.d/brave-browser-release.list"
+sudo apt update
+sudo apt install -y brave-browser
+# Firefox
+sudo apt install -y firefox
+# Chromium
+sudo apt install -y chromium
+# Opera
+sudo apt install -y opera-stable
+# Tor Browser
+sudo apt install -y torbrowser-launcher
+# 7zip
+sudo apt install -y p7zip-full
+# microsoft edge
+sudo curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+sudo rm microsoft.gpg
+sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list'
+sudo rm microsoft-edge-dev.list
+sudo apt update
+sudo apt install -y microsoft-edge-dev
+
+# Install essential tools
+sudo apt install -y build-essential curl wget git
+
+# Install chrome-gnome-shell
+sudo apt-get install chrome-gnome-shell
+
+# install gnome terminal
+sudo apt install gnome-terminal
+
+# Install programming languages
+# Python
+sudo apt install -y python3 python3-pip python3-venv python3-dev python3-setuptools python3-wheel python3-tk python3-apt python3-distutils
+# Node.js
+sudo apt install npm
+sudo apt install nodejs
+# Java
+sudo apt install -y default-jdk
+# Ruby
+sudo apt install -y ruby-full
+# PHP
+sudo apt install -y php php-cli php-fpm php-json php-common php-mysql php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath
+# Composer (for Laravel)
+sudo apt install -y composer
+# C++
+sudo apt install -y g++ gdb
+# C#
+sudo apt install -y mono-complete
+# Go
+sudo apt install -y golang-go
+# Rust
+sudo apt install -y rustc
+# C
+sudo apt install -y gcc
+
+# Install databases
+# MySQL and phpmyadmin
+sudo apt update
+sudo apt install -y mysql-server mysql-client
+sudo mysql_secure_installation
+sudo apt install -y phpmyadmin
+# PostgreSQL and gui
+sudo apt install -y postgresql postgresql-contrib
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+curl -fsSL https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/pgadmin.gpg
+sudo sh -c 'echo "deb https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
+sudo apt-get install pgadmin4
+# ! SQL Server and gui
+# Redis and gui
+sudo apt install -y redis-server
+sudo snap install redis-desktop-manager
+# ! MongoDB and gui
+sudo apt install -y mongodb
+wget https://downloads.mongodb.com/compass/mongodb-compass_1.28.4_amd64.deb
+sudo dpkg -i mongodb-compass_1.28.4_amd64.deb
+rm mongodb-compass_1.28.4_amd64.deb
+# SQLite and gui
+sudo apt install -y sqlite3
+sudo apt install -y sqlitebrowser
+# MariaDB and gui
+sudo apt install -y mariadb-server mariadb-client
+sudo snap install mysql-workbench-community
+# ! sqlserver and gui
+sudo apt install -y mssql-server mssql-tools unixodbc-dev
+sudo apt install -y mssql-server mssql-tools unixodbc-dev
+# ! Oracle and gui
+sudo apt install -y oracle-database-preinstall-19c
+sudo apt install -y oracle-database-preinstall-19c
+# ! IBM DB2 and gui
+sudo apt install -y ibm-data-db2
+sudo apt install -y ibm-data-db2
+# ! SAP HANA and gui
+sudo apt install -y sap-hana-client
+sudo apt install -y sap-hana-client
+
+# Install development tools
+# Docker
+curl -fsSL https://get.docker.com | sh
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo usermod -aG docker $USER
+sudo apt install -y docker-compose
+
+# Git
+sudo apt install -y git
+# Heroku CLI
+curl https://cli-assets.heroku.com/install.sh | sh
+# AWS CLI
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+# Azure CLI
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+# Google Cloud SDK
+curl https://sdk.cloud.google.com | bash
+# Kubernetes CLI
+sudo snap install kubectl --classic
+
+# Install Python libraries
+pip3 install pipenv numpy matplotlib requests pandas beautifulsoup4 lxml html5lib flask django flask-restful flask-jwt-extended flask-socketio flask-login flask-mail flask-migrate flask-wtf flask-cors flask-bcrypt flask-socketio flask-redis flask-mongoengine flask-mysql flask-sqlalchemy flask-restplus flask-restx virtualenv
+
+# npm libraries (global)
+# React
+sudo npm install -g create-react-app react
+# Angular
+sudo npm install -g @angular/cli
+# Vue
+sudo npm install -g @vue/cli
+# Express
+sudo npm install -g express-generator
+# Nest
+sudo npm install -g @nestjs/cli
+# Electron
+sudo npm install -g electron
+# Gatsby
+sudo npm install -g gatsby-cli
+# Next
+sudo npm install -g next
+# nodemon
+sudo npm install -g nodemon
+#expo
+sudo npm install -g expo-cli
+# Create React Native App
+sudo npm install -g create-react-native-app
+# React Native CLI
+sudo npm install -g react-native-cli
+
+# MongoDB Compass
+wget https://downloads.mongodb.com/compass/mongodb-compass_1.28.4_amd64.deb
+sudo dpkg -i mongodb-compass_1.28.4_amd64.deb
+rm mongodb-compass_1.28.4_amd64.deb
+# DBeaver
+wget https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
+sudo dpkg -i dbeaver-ce_latest_amd64.deb
+rm dbeaver-ce_latest_amd64.deb
+# Docker Desktop : https://desktop.docker.com/linux/main/amd64/docker-desktop-4.22.1-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64&_gl=1*a3spjt*_ga*OTQ1MzQyNjk1LjE2OTM1MTYzNTk.*_ga_XJWPQMJYHQ*MTY5MzUxNjM1OC4xLjEuMTY5MzUxNjU0OC42MC4wLjA.
+wget https://desktop.docker.com/linux/main/amd64/docker-desktop-4.22.1-amd64.deb
+sudo dpkg -i docker-desktop-4.22.1-amd64.deb
+rm docker-desktop-4.22.1-amd64.deb
+
+# Additional tools and software
+# WordPress
+sudo apt install -y wordpress
+
+# Additional Python libraries
+pip3 install numpy matplotlib requests
+
+# Clean up
+sudo apt autoremove -y
+sudo apt clean
+
+echo "Setup complete!"
