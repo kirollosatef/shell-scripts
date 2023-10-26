@@ -2,17 +2,15 @@
 
 # Create all.txt file
 echo "Creating all.txt..."
-echo "File structure:" > all.txt
+echo "File structure:" >all.txt
 
-# Loop through all files in the directory and append their names and contents to all.txt
-for file in *; do
-    if [ -f "$file" ]; then
-        echo "$file:" >> all.txt
-        echo "\`\`\`" >> all.txt
-        sed 's/^/\t/' "$file" >> all.txt
-        echo "\`\`\`" >> all.txt
-        echo >> all.txt # Add an empty line after each file's content
-    fi
+# Loop through all files (including those in subdirectories) and append their names and contents to all.txt
+find . -type f -print | while read -r file; do
+    echo "${file#./}:" >>all.txt
+    echo "\`\`\`" >>all.txt
+    sed 's/^/\t/' "$file" >>all.txt
+    echo "\`\`\`" >>all.txt
+    echo >>all.txt # Add an empty line after each file's content
 done
 
 echo "Done!"
