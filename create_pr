@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Check if gh CLI is installed
+if ! command -v gh &> /dev/null
+then
+    echo "GitHub CLI (gh) could not be found. Please install it first."
+    exit 1
+fi
+
+# Get the current branch name
+CURRENT_BRANCH=$(git branch --show-current)
+
+# Check if we're in a git repository
+if [ -z "$CURRENT_BRANCH" ]; then
+    echo "Error: Not inside a Git repository."
+    exit 1
+fi
+
+# Check if a pull request already exists
+EXISTING_PR=$(gh pr list --head "$CURRENT_BRANCH" --state open --json number,url --jq '.[0]')
+
+if [[ $EXISTING_PR ]]; then
+    # If a PR already exists, extract the number and URL
+    PR_NUMBER=$(echo $EXISTING_PR | jq -r '.number')
+    PR_URL=$(echo $EXISTING_PR | jq -r '.url')
+    echo "A pull request for branch $CURRENT_BRANCH already exists: $PR_URL"
+else
+    # If not, create a new PR and get the number of the new PR
+    gh pr create --fill
+    CREATED_PR=$(gh pr list --head "$CURRENT_BRANCH" --state open --json number,url --jq '.[0]')
+    PR_NUMBER=$(echo $CREATED_PR | jq -r '.number')
+    PR_URL=$(echo $CREATED_PR | jq -r '.url')
+    echo "Pull request number $PR_NUMBER has been created: $PR_URL"
+fi
+
+# Confirmation message
+echo "Pull request number $PR_NUMBER is currently open for branch $CURRENT_BRANCH."
