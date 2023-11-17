@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Function to remove all empty directories in the current directory and its subdirectories
+remove_empty_directories() {
+    find . -type d -empty -delete
+}
+
+# Start removing empty directories from the current directory
+remove_empty_directories

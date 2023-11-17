@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Function to process files in directories
+process_directory() {
+  local directory=$1
+  local prefix=$2
+  for file in "$directory"/*; do
+    if [ -d "$file" ]; then
+      # If it's a directory, recurse into it
+      process_directory "$file" "$prefix$(basename "$file")>"
+    elif [ -f "$file" ]; then
+      # If it's a file, rename it
+      local newname="${prefix}$(basename "$file")"
+      mv "$file" "$newname"
+    fi
+  done
+}
+
+# Start processing in the current directory
+current_directory=$(pwd)
+process_directory "$current_directory" ""
