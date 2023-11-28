@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Get the current directory
+current_dir=$(pwd)
+
+# Get the project name from the command line argument
+project_name=$1
+
+# Create the alias line
+alias_line="alias $project_name='cd $current_dir && code .'"
+
+# Append the alias line to ~/.bash_aliases
+echo "$alias_line" >>~/.bash_aliases
+
+# Source ~/.bash_aliases to make the changes take effect
+source ~/.bash_aliases
