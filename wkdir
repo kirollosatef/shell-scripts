@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /media/kiro_atef/part2/software/ && zsh
+cd "/media/kirollos/New Volume/software" && bash
 
 
 # Path: wkdir
